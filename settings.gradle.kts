@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Pokédex"
 include(":app")
-include(":Onboarding")
+include(":onboarding")
+include(":data")

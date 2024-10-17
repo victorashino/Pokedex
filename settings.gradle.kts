@@ -23,3 +23,4 @@ rootProject.name = "Pokédex"
 include(":app")
 include(":onboarding")
 include(":data")
+include(":poke-list")

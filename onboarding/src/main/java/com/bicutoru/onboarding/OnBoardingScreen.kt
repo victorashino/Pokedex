@@ -45,7 +45,7 @@ fun OnBoardingScreen(
 
 
         Button(
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate(Screen.PokeList.route) },
             modifier = Modifier
                 .padding(bottom = 64.dp)
                 .size(width = 150.dp, height = 48.dp),

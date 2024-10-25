@@ -1,0 +1,58 @@
+package com.bicutoru.data.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bicutoru.data.model.PokeModel
+import com.bicutoru.data.repository.PokeRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+class PokeListViewModel(
+    private val repository: PokeRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : ViewModel() {
+
+    private val _pokemonList = MutableStateFlow<List<PokeModel>>(emptyList())
+    val pokemonList: StateFlow<List<PokeModel>> = _pokemonList
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
+
+    fun getPokemons() = viewModelScope.launch(dispatcher) {
+        _isLoading.value = true
+
+        try {
+            val result = repository.getPokemons()
+
+            result.fold(
+                onSuccess = { pokeResponse ->
+                    val deferredPokemons = pokeResponse.pokemons.map { pokemon ->
+                        async {
+                            repository.getPokemonDetails(pokemon.url)
+                        }
+                    }
+
+                    val pokemons = deferredPokemons.mapNotNull { deferred ->
+                        deferred.await().getOrNull()
+                    }
+
+                    _pokemonList.value = pokemons
+                },
+                onFailure = { throwable ->
+                    _error.value = throwable.message
+                }
+            )
+        } catch (e: Exception) {
+            _error.value = e.message
+        } finally {
+            _isLoading.value = false
+        }
+    }
+}

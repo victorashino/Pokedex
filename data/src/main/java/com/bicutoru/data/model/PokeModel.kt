@@ -1,8 +1,5 @@
 package com.bicutoru.data.model
 
-import android.annotation.SuppressLint
-import com.google.gson.annotations.SerializedName
-
 data class PokeModel(
     val id: Int,
     val name: String,
@@ -12,7 +9,7 @@ data class PokeModel(
     val types: List<TypeDetail>
 ) {
     val imageUrl: String
-        get() = "https://projectpokemon.org/images/sprites-models/bw-animated/${String.format("%03d", id)}.gif"
+        get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/$id.gif"
 }
 
 data class TypeDetail(

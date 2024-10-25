@@ -18,7 +18,8 @@ import kotlinx.coroutines.runBlocking
     } else {
         println("Erro ao buscar Pokémons: ${result.exceptionOrNull()}")
     }
-}*/
+}*//*
+
 
 // TEST GET DETAIL
 fun main() = runBlocking {
@@ -37,6 +38,7 @@ fun main() = runBlocking {
 }
 
  // TEST GET GIF
+*/
 /*
 fun main() = runBlocking {
     val bulbasaur = PokeModel(

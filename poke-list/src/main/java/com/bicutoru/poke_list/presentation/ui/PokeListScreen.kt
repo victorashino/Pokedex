@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.decode.GifDecoder
@@ -42,7 +43,9 @@ import com.bicutoru.data.repository.PokeRepository
 import com.bicutoru.data.viewmodel.PokeListViewModel
 
 @Composable
-fun PokeListScreen(viewModel: PokeListViewModel = remember { PokeListViewModel(PokeRepository()) }) {
+fun PokeListScreen(
+    viewModel: PokeListViewModel = hiltViewModel()
+) {
 
     val pokemons by viewModel.pokemonList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -52,7 +55,6 @@ fun PokeListScreen(viewModel: PokeListViewModel = remember { PokeListViewModel(P
         viewModel.getPokemons()
     }
 
-    println("Pokémons recebidos UI: $pokemons")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +122,7 @@ private fun PokemonItem(pokemon: PokeModel) {
 }
 
 @Composable
-fun GifImage(
+private fun GifImage(
     modifier: Modifier = Modifier,
     imageUrl: String
 ) {
@@ -140,79 +142,5 @@ fun GifImage(
         contentDescription = null,
         modifier = modifier.fillMaxWidth(),
         imageLoader = imageLoader
-    )
-}
-
-@Composable
-fun PokeListSkeleton() {
-    val itemCount = 10
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFEFFF0)),
-    ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(itemCount) {
-                SkeletonItem()
-            }
-        }
-        ShimmerOverlay()
-    }
-}
-
-@Composable
-fun SkeletonItem() {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .height(190.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-        ) {
-        }
-    }
-}
-
-@Composable
-fun ShimmerOverlay() {
-    val shimmerBrush = customShimmerAnimation()
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(shimmerBrush)
-    )
-}
-
-@Composable
-fun customShimmerAnimation(): Brush {
-    val infiniteTransition = rememberInfiniteTransition(label = "")
-    val shimmerTranslate by infiniteTransition.animateFloat(
-        initialValue = -400f,
-        targetValue = 1600f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1200, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ), label = ""
-    )
-
-    return Brush.horizontalGradient(
-        colors = listOf(
-            Color.Gray.copy(alpha = 0.1f),
-            Color.Gray.copy(alpha = 0.0f),
-            Color.Gray.copy(alpha = 0.1f)
-        ),
-        startX = shimmerTranslate - 150f,
-        endX = shimmerTranslate + 150f
     )
 }

@@ -2,18 +2,21 @@ package com.bicutoru.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bicutoru.data.di.DispatcherIO
 import com.bicutoru.data.model.PokeModel
 import com.bicutoru.data.repository.PokeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PokeListViewModel(
+@HiltViewModel
+class PokeListViewModel @Inject constructor(
     private val repository: PokeRepository,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @DispatcherIO private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _pokemonList = MutableStateFlow<List<PokeModel>>(emptyList())

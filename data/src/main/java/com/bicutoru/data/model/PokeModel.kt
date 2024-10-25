@@ -9,7 +9,8 @@ data class PokeModel(
     val types: List<TypeDetail>
 ) {
     val imageUrl: String
-        get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/$id.gif"
+        get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/$id.gif"
+        //get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/$id.gif"
 }
 
 data class TypeDetail(

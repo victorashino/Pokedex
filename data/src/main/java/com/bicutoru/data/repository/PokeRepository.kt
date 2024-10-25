@@ -3,14 +3,15 @@ package com.bicutoru.data.repository
 import android.util.Log
 import com.bicutoru.data.common.RetrofitClient
 import com.bicutoru.data.model.PokeModel
+import com.bicutoru.data.remote.PokeServiceApi
 import com.bicutoru.data.response.PokeListResponse
 import com.bicutoru.data.response.PokeResponse
 import java.io.IOException
+import javax.inject.Inject
 
-class PokeRepository {
-
-    private val service = RetrofitClient.pokeServiceApi
-
+class PokeRepository @Inject constructor(
+    private val service: PokeServiceApi
+) {
 
     suspend fun getPokemons(limit: Int = 920, offset: Int = 0): Result<PokeListResponse> {
         return try {

@@ -1,6 +1,5 @@
 package com.bicutoru.data.common
 
-import com.bicutoru.data.remote.PokeServiceApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,6 +15,4 @@ object RetrofitClient {
         .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
-    val pokeServiceApi: PokeServiceApi = retrofitInstance.create(PokeServiceApi::class.java)
 }

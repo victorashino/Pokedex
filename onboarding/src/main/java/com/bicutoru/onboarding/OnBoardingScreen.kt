@@ -36,36 +36,38 @@ fun OnBoardingScreen(
 
         Text(
             text = "Pokédex",
-            fontSize = 64.sp,
+            fontSize = 74.sp,
+            fontWeight = FontWeight.SemiBold,
             color = Color(0xFFE70000),
             modifier = Modifier.padding(top = 128.dp)
         )
 
-        Spacer(modifier = Modifier.weight(1f))
-
+        Spacer(modifier = Modifier.weight(0.27f))
 
         Button(
             onClick = { navController.navigate(Screen.PokeList.route) },
             modifier = Modifier
                 .padding(bottom = 64.dp)
-                .size(width = 150.dp, height = 48.dp),
+                .size(width = 180.dp, height = 50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF69CDE3)
             ),
-            elevation = ButtonDefaults.buttonElevation(3.dp)
+            elevation = ButtonDefaults.buttonElevation(1.dp)
         ) {
             Text(
-                text = "START",
+                text = "Start",
                 fontWeight = FontWeight.Medium,
                 fontSize = 24.sp
             )
         }
 
+        Spacer(modifier = Modifier.weight(0.14f))
+
         Text(
             text = "By Victor Ashino",
-            fontWeight = FontWeight.Light,
+            fontWeight = FontWeight.Normal,
             fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 64.dp)
+            modifier = Modifier.padding(bottom = 48.dp)
         )
 
 

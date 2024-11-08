@@ -42,6 +42,7 @@ class PokeRepository @Inject constructor(
 
             if (response.isSuccessful) {
                 val body = response.body()
+                Log.d("PokeRepository getPokemonDetails", "response.body: $body")
                 if (body != null) {
                     Result.success(body)
                 } else {
